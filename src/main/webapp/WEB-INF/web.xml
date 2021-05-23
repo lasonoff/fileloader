@@ -1,7 +1,53 @@
 <!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <display-name>FileLoader</display-name>
+
+    <servlet>
+        <servlet-name>FileloaderMainServlet</servlet-name>
+        <servlet-class>ru.yauroff.test.fileloader.FileloaderMain</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>UsersController</servlet-name>
+        <servlet-class>ru.yauroff.test.fileloader.controller.UsersController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UsersController</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>ru.yauroff.test.fileloader.controller.UserController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/users/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FileController</servlet-name>
+        <servlet-class>ru.yauroff.test.fileloader.controller.FileController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FileController</servlet-name>
+        <url-pattern>/files/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EventController</servlet-name>
+        <servlet-class>ru.yauroff.test.fileloader.controller.EventController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EventController</servlet-name>
+        <url-pattern>/events/*</url-pattern>
+    </servlet-mapping>
 </web-app>

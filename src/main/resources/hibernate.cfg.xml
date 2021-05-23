@@ -5,24 +5,30 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">
-            org.hibernate.dialect.MySQLDialect
+            org.hibernate.dialect.MySQL5Dialect
         </property>
         <property name="hibernate.connection.driver_class">
             com.mysql.cj.jdbc.Driver
         </property>
         <property name="hibernate.connection.url">
-            jdbc:mysql://127.0.0.1:3306/test?allowPublicKeyRetrieval=true&amp;useSSL=false
+            jdbc:mysql://127.0.0.1:3306/fileloader?allowPublicKeyRetrieval=true&amp;useSSL=false
         </property>
         <property name="hibernate.connection.username">
             root
         </property>
         <property name="hibernate.connection.password">
-            password
+            LAson200686
         </property>
 
-        <mapping class="ru.yauroff.test.mainproject.model.User"/>
-        <mapping class="ru.yauroff.test.mainproject.model.Event"/>
-        <mapping class="ru.yauroff.test.mainproject.model.File"/>
+        <property name="hibernate.connection.autocommit">
+            true
+        </property>
+
+        <property name="show_sql">true</property>
+
+        <mapping class="ru.yauroff.test.fileloader.model.User"/>
+        <mapping class="ru.yauroff.test.fileloader.model.Event"/>
+        <mapping class="ru.yauroff.test.fileloader.model.File"/>
 
     </session-factory>
 </hibernate-configuration>
