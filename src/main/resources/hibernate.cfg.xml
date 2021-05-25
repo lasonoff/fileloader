@@ -17,7 +17,7 @@
             root
         </property>
         <property name="hibernate.connection.password">
-            password
+            LAson200686
         </property>
 
         <property name="hibernate.connection.autocommit">
