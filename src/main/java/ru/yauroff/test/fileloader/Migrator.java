@@ -10,6 +10,7 @@ class Migrator {
                 System.getenv("JDBC_DATABASE_PASSWORD") != null) {
             flyway.setDataSource(System.getenv("JDBC_DATABASE_URL"), System.getenv("JDBC_DATABASE_USER"),
                     System.getenv("JDBC_DATABASE_PASSWORD"));
+            flyway.clean();
             flyway.migrate();
         }
     }
