@@ -24,13 +24,11 @@ CREATE TABLE `event` (
   `fileId` bigint NOT NULL,
   `userId` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_event_file` (`fileId` ASC) VISIBLE,
   CONSTRAINT `fk_event_file`
     FOREIGN KEY (`fileId`)
     REFERENCES `file` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  INDEX `fk_event_user` (`userId` ASC) VISIBLE,
   CONSTRAINT `fk_event_user`
     FOREIGN KEY (`userId`)
     REFERENCES `user` (`id`)
