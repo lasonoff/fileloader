@@ -50,7 +50,18 @@ public class ObjectRepository {
 
     private void createSessionFactory() {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+
+            Configuration config = new Configuration();
+            config.configure();
+
+            if (System.getenv("JDBC_DATABASE_URL") != null &&
+                    System.getenv("JDBC_DATABASE_USER") != null &&
+                    System.getenv("JDBC_DATABASE_PASSWORD") != null) {
+                config.setProperty("hibernate.connection.username", System.getenv("JDBC_DATABASE_USER"));
+                config.setProperty("hibernate.connection.username", System.getenv("JDBC_DATABASE_PASSWORD"));
+                config.setProperty("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
+            }
+            sessionFactory = config.buildSessionFactory();
         } catch (HibernateException e) {
             logger.error("Ошибка при создании SessionFactory!", e);
             System.exit(0);
