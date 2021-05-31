@@ -58,7 +58,7 @@ public class ObjectRepository {
                     System.getenv("JDBC_DATABASE_USER") != null &&
                     System.getenv("JDBC_DATABASE_PASSWORD") != null) {
                 config.setProperty("hibernate.connection.username", System.getenv("JDBC_DATABASE_USER"));
-                config.setProperty("hibernate.connection.username", System.getenv("JDBC_DATABASE_PASSWORD"));
+                config.setProperty("hibernate.connection.password", System.getenv("JDBC_DATABASE_PASSWORD"));
                 config.setProperty("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
             }
             sessionFactory = config.buildSessionFactory();
