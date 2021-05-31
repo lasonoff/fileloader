@@ -96,6 +96,7 @@
                     <execution>
                         <phase>package</phase>
                         <goals>
+                            <goal>clean</goal>
                             <goal>migrate</goal>
                         </goals>
                     </execution>
