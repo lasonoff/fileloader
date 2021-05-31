@@ -19,9 +19,9 @@
 
         <!-- flyway properties -->
         <flyway.version>7.8.2</flyway.version>
-        <flyway.user>root</flyway.user>
-        <flyway.password>password</flyway.password>
-        <flyway.url>jdbc:mysql://127.0.0.1:3306/fileloader?allowPublicKeyRetrieval=true&amp;useSSL=false</flyway.url>
+        <flyway.user>${env.JDBC_DATABASE_USER}</flyway.user>
+        <flyway.password>${env.JDBC_DATABASE_PASSWORD}</flyway.password>
+        <flyway.url>${env.JDBC_DATABASE_URL}</flyway.url>
         <flyway.locations>filesystem:src/main/resources/db/migration</flyway.locations>
     </properties>
 
@@ -92,6 +92,14 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>${flyway.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -100,7 +108,9 @@
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals><goal>copy</goal></goals>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
