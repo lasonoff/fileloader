@@ -50,10 +50,12 @@ public class ObjectRepository {
 
     private void createSessionFactory() {
         try {
+            logger.debug("JDBC_DATABASE_URL = " + System.getenv("JDBC_DATABASE_URL"));
+            logger.debug("JDBC_DATABASE_USER = " + System.getenv("JDBC_DATABASE_USER"));
+            logger.debug("JDBC_DATABASE_PASSWORD = " + System.getenv("JDBC_DATABASE_PASSWORD"));
 
             Configuration config = new Configuration();
             config.configure();
-
             if (System.getenv("JDBC_DATABASE_URL") != null &&
                     System.getenv("JDBC_DATABASE_USER") != null &&
                     System.getenv("JDBC_DATABASE_PASSWORD") != null) {
