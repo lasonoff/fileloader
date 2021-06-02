@@ -1,1 +1,1 @@
-web: java -jar target/dependency/webapp-runner.jar --port 8080 target/fileloader.war
+web: java -jar target/dependency/webapp-runner.jar --port $PORT target/fileloader.war
