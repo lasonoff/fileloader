@@ -32,6 +32,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>FilesController</servlet-name>
+        <servlet-class>ru.yauroff.test.fileloader.controller.FilesController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FilesController</servlet-name>
+        <url-pattern>/files</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>FileController</servlet-name>
         <servlet-class>ru.yauroff.test.fileloader.controller.FileController</servlet-class>
     </servlet>
@@ -39,6 +49,16 @@
     <servlet-mapping>
         <servlet-name>FileController</servlet-name>
         <url-pattern>/files/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EventsController</servlet-name>
+        <servlet-class>ru.yauroff.test.fileloader.controller.EventsController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EventsController</servlet-name>
+        <url-pattern>/events</url-pattern>
     </servlet-mapping>
 
     <servlet>

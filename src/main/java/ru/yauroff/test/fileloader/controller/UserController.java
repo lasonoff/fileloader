@@ -31,7 +31,7 @@ public class UserController extends BaseController {
         }
         Long id = parseId(request.getRequestURI(), "users");
         User user = userService.getById(id);
-        writeJsonToResponce(user, response);
+        writeJsonToResponse(user, response);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserController extends BaseController {
         User user = fromJson(stringRequestBody, User.class);
         user.setId(id);
         user = userService.update(user);
-        writeJsonToResponce(user, response);
+        writeJsonToResponse(user, response);
     }
 
     @Override

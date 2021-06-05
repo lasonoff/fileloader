@@ -1,74 +1,47 @@
 package ru.yauroff.test.fileloader.controller;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.yauroff.test.fileloader.model.File;
+import ru.yauroff.test.fileloader.service.impl.FileService;
+import ru.yauroff.test.fileloader.service.impl.ServiceRepository;
 import ru.yauroff.test.fileloader.service.impl.UserService;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
 
-public class FileController extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(UsersController.class);
+public class FileController extends BaseController {
+    private static final Logger logger = LogManager.getLogger(FileController.class);
+
     private static UserService userService;
-    //private static FileService fileService;
+    private static FileService fileService;
 
-    static final int fileMaxSize = 100 * 1024;
-    static final int memMaxSize = 100 * 1024;
+    @Override
+    public void init() throws ServletException {
+        fileService = ServiceRepository.getInstance().getFileService();
+    }
 
-    private String filePath = "/home/proselyte/Programming/Projects/SerlvetsTutorial/src/main/resources/uploads/";
-    //private File file;
-
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+        if (request.getRequestURI().equals("/files/count")) {
+            response.setContentType("text/html");
+            PrintWriter messageWriter = response.getWriter();
+            messageWriter.println(fileService.getCount());
+            return;
+        }
+        Long id = parseId(request.getRequestURI(), "files");
+        File file = fileService.getById(id);
+        writeJsonToResponse(file, response);
+    }
 
-        String docType = "<!DOCTYPE html>";
-        String title = "File Uploading Demo";
-
-        /*PrintWriter writer = response.getWriter();
-
-
-        DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-        diskFileItemFactory.setRepository(new File(filePath));
-        diskFileItemFactory.setSizeThreshold(memMaxSize);
-
-        ServletFileUpload upload = new ServletFileUpload(diskFileItemFactory);
-        upload.setSizeMax(fileMaxSize);
-
-        try {
-            List fileItems = upload.parseRequest(request);
-
-            Iterator iterator = fileItems.iterator();
-
-            writer.println(docType +
-                    "<html>" +
-                    "<head>" +
-                    "<title>" + title + "</title>" +
-                    "</head>" +
-                    "<body>");
-
-            while (iterator.hasNext()) {
-                FileItem fileItem = (FileItem) iterator.next();
-                if (!fileItem.isFormField()) {
-
-                    String fileName = fileItem.getName();
-                    if (fileName.lastIndexOf("\\") >= 0) {
-                        file = new File(filePath +
-                                fileName.substring(fileName.lastIndexOf("\\")));
-                    } else {
-                        file = new File(filePath +
-                                fileName.substring(fileName.lastIndexOf("\\") + 1));
-                    }
-                    fileItem.write(file);
-                    writer.println(fileName + " is uploaded.<br>");
-                }
-            }
-            writer.println("</body>" +
-                    "</html>");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 }

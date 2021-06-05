@@ -8,9 +8,13 @@ public class ServiceRepository {
 
     private static ServiceRepository instance;
     private UserService userService;
+    private FileService fileService;
+    private EventService eventService;
 
     private ServiceRepository() {
         userService = new UserService();
+        fileService = new FileService();
+        eventService = new EventService();
     }
 
     public static synchronized ServiceRepository getInstance() {
@@ -22,5 +26,13 @@ public class ServiceRepository {
 
     public UserService getUserService() {
         return userService;
+    }
+
+    public FileService getFileService() {
+        return fileService;
+    }
+
+    public EventService getEventService() {
+        return eventService;
     }
 }

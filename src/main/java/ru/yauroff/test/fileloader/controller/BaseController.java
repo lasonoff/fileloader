@@ -61,7 +61,7 @@ public class BaseController extends HttpServlet {
         return res;
     }
 
-    protected <T> void writeJsonToResponce(T object, HttpServletResponse response) throws ServletException, IOException {
+    protected <T> void writeJsonToResponse(T object, HttpServletResponse response) throws ServletException, IOException {
         String stringJson = "";
         if (object != null) {
             stringJson = toJson(object);

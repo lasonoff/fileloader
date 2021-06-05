@@ -10,10 +10,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
-public class EventController extends BaseController {
-    private static final Logger logger = LogManager.getLogger(EventController.class);
+public class EventsController extends BaseController {
+    private static final Logger logger = LogManager.getLogger(EventsController.class);
     private static EventService eventService;
 
     @Override
@@ -23,21 +23,12 @@ public class EventController extends BaseController {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.info(request.getRequestURI());
-        if (request.getRequestURI().equals("/events/count")) {
-            response.setContentType("text/html");
-            PrintWriter messageWriter = response.getWriter();
-            messageWriter.println(eventService.getCount());
-            return;
-        }
-        Long id = parseId(request.getRequestURI(), "events");
-        Event event = eventService.getById(id);
-        writeJsonToResponse(event, response);
+        List<Event> events = eventService.getAll();
+        writeJsonToResponse(events, response);
     }
 
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        Long id = parseId(request.getRequestURI(), "events");
-        eventService.deleteById(id);
+        eventService.deleteAll();
     }
 }

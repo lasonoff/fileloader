@@ -25,7 +25,7 @@ public class UsersController extends BaseController {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<User> users = userService.getAll();
-        writeJsonToResponce(users, response);
+        writeJsonToResponse(users, response);
     }
 
     @Override
@@ -37,6 +37,6 @@ public class UsersController extends BaseController {
         } catch (ParamsNotValidException e) {
             throw new ServletException(e);
         }
-        writeJsonToResponce(user, response);
+        writeJsonToResponse(user, response);
     }
 }

@@ -6,13 +6,27 @@ public interface IService<T, ID> {
 
     List<T> getAll();
 
-    T getById(ID id);
+    default T getById(ID id) {
+        return null;
+    }
 
-    T create(T entity) throws ParamsNotValidException;
+    default T create(T entity) throws ParamsNotValidException {
+        return null;
+    }
 
-    T update(T entity);
+    default T update(T entity) {
+        return null;
+    }
 
-    void deleteById(ID id);
+    default void deleteById(ID id) {
 
-    long getCount();
+    }
+
+    default void deleteAll() {
+
+    }
+
+    default long getCount() {
+        return 0L;
+    }
 }
