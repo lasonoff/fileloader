@@ -1,6 +1,7 @@
 package ru.yauroff.test.fileloader.service.impl;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.io.FileExistsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.yauroff.test.fileloader.model.*;
@@ -15,10 +16,12 @@ import ru.yauroff.test.fileloader.service.UnknownUserException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class FileService implements IService<File, Long> {
     private static final int DEFAULT_MAX_SIZE = 100 * 1024;
-    private static final String DEFAULT_FILE_PATH = "filesystem:src/main/resources/files";
+    private static final String DEFAULT_FILE_PATH = System.getProperty("user.dir");
+    private static final String SEP = System.getProperty("file.separator");
     private static final Logger logger = LogManager.getLogger(FileService.class);
 
     private IFileRepository fileRepository;
@@ -34,6 +37,11 @@ public class FileService implements IService<File, Long> {
     @Override
     public List<File> getAll() {
         return fileRepository.findAll();
+    }
+
+    @Override
+    public File getById(Long id) {
+        return fileRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -71,9 +79,9 @@ public class FileService implements IService<File, Long> {
                 String fileName = fi.getName();
                 String filePath;
                 if (fileName.lastIndexOf("\\") >= 0) {
-                    filePath = DEFAULT_FILE_PATH + fileName.substring(fileName.lastIndexOf("\\"));
+                    filePath = DEFAULT_FILE_PATH + SEP +fileName.substring(fileName.lastIndexOf("\\"));
                 } else {
-                    filePath = DEFAULT_FILE_PATH + fileName.substring(fileName.lastIndexOf("\\") + 1);
+                    filePath = DEFAULT_FILE_PATH + SEP + fileName.substring(fileName.lastIndexOf("\\") + 1);
                 }
                 file = new java.io.File(filePath);
                 File fileEntity = new File(fileName, filePath, description, FileStatus.ACTIVE);
@@ -85,6 +93,33 @@ public class FileService implements IService<File, Long> {
             }
         }
         return res;
+    }
+
+    public File deleteFile(Long id, String login) throws Exception {
+        if (login == null) {
+            throw new ParamsNotValidException("Not valid login for deleteFile!");
+        }
+        User user = userRepository.findByLogin(login).orElse(null);
+        if (user == null) {
+            throw new UnknownUserException("Unknown user " + login);
+        }
+
+        File fileEntity = fileRepository.findById(id).orElse(null);
+        if (fileEntity == null) {
+            throw new ParamsNotValidException("Not find file for deleteFile!");
+        }
+        // Delete from disk
+        java.io.File file = new java.io.File(fileEntity.getFileLocation());
+        if (!file.exists()) {
+            throw new FileExistsException("File " + fileEntity.getName() + " not exists!");
+        }
+        file.delete();
+        // Update from db
+        Event event = new Event(fileEntity, user, ActionType.DELETE);
+        eventRepository.create(event);
+        fileEntity.setStatus(FileStatus.DELETED);
+        fileRepository.update(fileEntity);
+        return fileEntity;
     }
 }
 

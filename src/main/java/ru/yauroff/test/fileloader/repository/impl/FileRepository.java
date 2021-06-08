@@ -17,6 +17,6 @@ public class FileRepository extends Repository<Long, File> implements IFileRepos
 
     @Override
     protected void updateEntity(File entityFromDB, File entity) {
-
+        entityFromDB.setStatus(entity.getStatus());
     }
 }

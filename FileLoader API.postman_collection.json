@@ -28,7 +28,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "<String>",
+											"value": "<string>",
 											"description": "(Required) The id of the user to get."
 										}
 									]
@@ -57,7 +57,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "<String>"
+											"value": "<string>"
 										}
 									]
 								}
@@ -81,7 +81,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "<String>",
+											"value": "<string>",
 											"description": "(Required) The id of the user to delete."
 										}
 									]
@@ -176,6 +176,10 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"login\": \"string\"}"
+								},
 								"url": {
 									"raw": "{{baseUrl}}/files/:fileId",
 									"host": [
@@ -194,6 +198,55 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get a singl file info",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/files/:fileId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"files",
+										":fileId"
+									],
+									"variable": [
+										{
+											"key": "fileId",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Download a singl file",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/files/:fileId/download",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"files",
+										":fileId",
+										"download"
+									],
+									"variable": [
+										{
+											"key": "fileId",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -205,7 +258,16 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": "{{baseUrl}}/files/count",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"files",
+										"count"
+									]
+								}
 							},
 							"response": []
 						}
@@ -216,6 +278,43 @@
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/files",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload a file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "login",
+									"value": "<string>",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "description",
+									"value": "<string>",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
 							"raw": "{{baseUrl}}/files",
 							"host": [
@@ -253,7 +352,7 @@
 									"variable": [
 										{
 											"key": "eventId",
-											"value": "<String>"
+											"value": "<string>"
 										}
 									]
 								}
@@ -277,7 +376,7 @@
 									"variable": [
 										{
 											"key": "eventId",
-											"value": "<String>"
+											"value": "<string>"
 										}
 									]
 								}
@@ -369,7 +468,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:8888"
+			"value": "http://localhost:8080"
 		}
 	]
 }
